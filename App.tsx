@@ -1,117 +1,60 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import {BottomSheet, IBottomSheetRef} from './BottomSheet';
 import {
-  SafeAreaView,
-  ScrollView,
+  Text,
   StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
-  View,
+  ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const App: React.FC = () => {
+  const bottomSheetRef = React.useRef<IBottomSheetRef>(null);
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
+    <>
+      <ScrollView style={styles.content}>
+        <StatusBar barStyle="dark-content" backgroundColor="#fafafa" />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => bottomSheetRef.current?.expand()}>
+          <Text>Open Bottom Sheet</Text>
+        </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+      <BottomSheet ref={bottomSheetRef}>
+        <Text style={styles.text}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere amet
+          eum alias asperiores, incidunt magni unde vero, aut deleniti
+          accusantium ipsa aliquam magnam doloribus sequi! Nostrum cupiditate
+          enim laborum doloribus dolores nesciunt? Voluptatibus, non, maiores
+          laudantium, sed aperiam ab doloribus voluptas animi cum magni odit
+          laborum repellat at rerum ducimus eius consequuntur! Quidem, ut
+          dolorum! Esse sapiente voluptatum illo perferendis. Voluptas aliquam
+          eius, vero nobis perspiciatis ipsum sit voluptatem nostrum beatae ea
+          totam ex similique est a. Consequatur repellat excepturi sequi minus.
+          Repudiandae, esse laboriosam alias iste ipsa amet eligendi sit
+          voluptates minima autem similique ut quod ratione totam aliquam?
+        </Text>
+      </BottomSheet>
+    </>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
+  text: {
+    color: 'black',
+    lineHeight: 24,
+  },
+  content: {
+    marginTop: StatusBar.currentHeight + 24,
+  },
+  button: {
+    backgroundColor: 'lightblue',
+    borderRadius: 12,
+    paddingVertical: 12,
     paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+    fontWeight: '500',
+    alignSelf: 'center',
+    alignItems: 'center',
   },
 });
 
